@@ -44,7 +44,7 @@ export default function MobileNav({
               exit={{ opacity: 0 }}
             />
             <motion.div
-              className="fixed top-0 right-0 bottom-0 z-61 w-64 max-w-[80vw] h-[95vh] bg-surface-container border-l border-white/10 p-5 flex flex-col gap-1"
+              className="fixed top-0 right-0 bottom-0 z-61 w-64 max-w-[80vw] h-screen bg-surface-container border-l border-white/10 p-5 flex flex-col gap-1"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
