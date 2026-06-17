@@ -1,0 +1,9 @@
+{
+  "slug": "animate-stagger",
+  "order": 24,
+  "title": "Imperative animate() + stagger()",
+  "accent": "lime",
+  "category": "Advanced",
+  "summary": "Fire animations from events with useAnimate, and ripple them across many elements using the stagger() helper.",
+  "duration": "12 min"
+}

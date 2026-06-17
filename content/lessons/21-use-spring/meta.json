@@ -1,0 +1,9 @@
+{
+  "slug": "use-spring",
+  "order": 21,
+  "title": "Smoothing with useSpring",
+  "accent": "rose",
+  "category": "Advanced",
+  "summary": "Wrap a motion value in useSpring to add natural lag and follow-through — the secret behind buttery cursor followers.",
+  "duration": "12 min"
+}

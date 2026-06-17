@@ -1,0 +1,16 @@
+Sometimes you need to fire an animation from an event — a click, a success, a
+keypress — not from a prop change. `useAnimate` gives you a `scope` ref and an
+`animate(target, keyframes, options)` function you can call whenever you like.
+Pair it with the `stagger()` helper as the `delay` and one call ripples across
+every matching element in the scope.
+
+<Instructions>
+
+1. Import `useAnimate` and `stagger` from `"motion/react"`.
+2. Get `const [scope, animate] = useAnimate()` and put the `ref={scope}` on the wrapper.
+3. In `play`, animate every `.dot`: `animate(".dot", { y: [0, -24, 0] }, { duration: 0.6, delay: stagger(0.1) })`.
+
+</Instructions>
+
+Hit **Play wave** — the dots bounce one after another. Change the `stagger`
+amount (try `0.05` or `-0.1` to reverse) to retime the ripple.

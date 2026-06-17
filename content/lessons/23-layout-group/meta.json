@@ -1,0 +1,9 @@
+{
+  "slug": "layout-group",
+  "order": 23,
+  "title": "Coordinated Layout (LayoutGroup)",
+  "accent": "indigo",
+  "category": "Advanced",
+  "summary": "Wrap independent components in LayoutGroup so one expanding makes its siblings animate over instead of jumping.",
+  "duration": "12 min"
+}

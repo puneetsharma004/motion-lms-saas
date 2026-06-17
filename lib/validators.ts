@@ -122,6 +122,26 @@ export const LESSON_CHECKS: Record<string, LessonCheck[]> = {
     { id: "constraints", label: "Bound it with dragConstraints", test: has(/dragConstraints/) },
     { id: "momentum", label: "Add momentum/elastic (dragElastic / dragTransition)", test: has(/dragElastic|dragTransition|dragMomentum/) },
   ],
+  "use-spring": [
+    { id: "motionValue", label: "Hold the target in useMotionValue()", test: has(/\buseMotionValue\s*\(/) },
+    { id: "useSpring", label: "Smooth it with useSpring()", test: has(/\buseSpring\s*\(/) },
+    { id: "style", label: "Point the element at the spring via style", test: has(/style\s*=\s*\{/) },
+  ],
+  "presence-modes": [
+    { id: "presence", label: "Wrap the content in <AnimatePresence>", test: has(/<\s*AnimatePresence/) },
+    { id: "mode", label: 'Use mode="wait" (or "popLayout")', test: has(/mode\s*=\s*["'](wait|popLayout)["']/) },
+    { id: "exit", label: "Give the swapped item an exit prop", test: has(/\bexit\s*=\s*\{/) },
+  ],
+  "layout-group": [
+    { id: "import", label: "Import LayoutGroup", test: has(/\bLayoutGroup\b/) },
+    { id: "wrap", label: "Wrap the siblings in <LayoutGroup>", test: has(/<\s*LayoutGroup/) },
+    { id: "layout", label: "Keep layout on the items", test: has(/\blayout\b/) },
+  ],
+  "animate-stagger": [
+    { id: "useAnimate", label: "Get [scope, animate] from useAnimate()", test: has(/\buseAnimate\s*\(/) },
+    { id: "stagger", label: "Ripple it with stagger()", test: has(/\bstagger\s*\(/) },
+    { id: "animateCall", label: "Fire it by calling animate(...)", test: has(/\banimate\s*\(/) },
+  ],
 };
 
 export interface CheckResult {

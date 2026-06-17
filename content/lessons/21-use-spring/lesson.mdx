@@ -1,0 +1,16 @@
+`useSpring` takes a motion value and returns a new one that *chases* it with
+spring physics. Point an element at the spring instead of the raw value and it
+trails with natural lag and follow-through instead of snapping. It's the trick
+behind smooth cursor followers, sticky tooltips, and momentum-y UI bits.
+
+<Instructions>
+
+1. Import `motion`, `useMotionValue`, `useSpring` from `"motion/react"`.
+2. The pointer already writes into `x` / `y` (`useMotionValue`). Smooth them:
+   `const sx = useSpring(x, { stiffness: 200, damping: 20 })` (and `sy`).
+3. Point the dot at the springs: `style={{ x: sx, y: sy }}`.
+
+</Instructions>
+
+Move your pointer around the box — the dot eases after it instead of locking to
+it. Lower `stiffness` / `damping` for more float, higher for a tighter follow.

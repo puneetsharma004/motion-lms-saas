@@ -1,0 +1,9 @@
+{
+  "slug": "presence-modes",
+  "order": 22,
+  "title": "Swapping Content (mode=\"wait\")",
+  "accent": "violet",
+  "category": "Advanced",
+  "summary": "Cross-fade between views cleanly with AnimatePresence mode=\"wait\" — the right way to swap tabs, steps and slides.",
+  "duration": "10 min"
+}

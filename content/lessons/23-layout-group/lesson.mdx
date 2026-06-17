@@ -1,0 +1,16 @@
+A `layout` element animates its *own* size changes. But when each item is its
+own component with its own state, expanding one makes the others **jump** to
+their new positions — because they didn't re-render and never measured the shift.
+`LayoutGroup` fixes this: wrap the siblings in it and a layout change in any one
+triggers the rest to animate to their new spots together.
+
+<Instructions>
+
+1. Import `motion` and `LayoutGroup` from `"motion/react"`.
+2. Each `Item` is already a `motion.div` with `layout`.
+3. Wrap the list of `Item`s in `<LayoutGroup>` so expanding one pushes the others smoothly.
+
+</Instructions>
+
+Open one row — its siblings glide down instead of snapping. Remove `LayoutGroup`
+to see the jump it prevents.

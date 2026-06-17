@@ -1,0 +1,18 @@
+When you swap one piece of content for another — a tab panel, a wizard step, a
+quote rotator — you usually want the old one to leave *before* the new one
+arrives, so they don't overlap or jump. `AnimatePresence mode="wait"` does
+exactly that: it holds the incoming child until the outgoing child's `exit`
+finishes. The other key detail is a unique `key` per item, so Motion knows the
+content actually changed. (`mode="popLayout"` instead pops the leaving item out
+of flow so siblings reflow smoothly.)
+
+<Instructions>
+
+1. Import `motion` and `AnimatePresence` from `"motion/react"`.
+2. Wrap the changing word in `<AnimatePresence mode="wait">`.
+3. Give the `motion.span` a `key={i}` and `initial` / `animate` / `exit` on `opacity` + `y`.
+
+</Instructions>
+
+Hit **Next** — each word slides out before the next slides in, no overlap. Drop
+`mode="wait"` to feel why it matters.
