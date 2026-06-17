@@ -1,0 +1,19 @@
+Motion turns interaction states into one-line props. Instead of wiring up event
+handlers and state, you declare the animation for each gesture:
+
+- `whileHover` — animate while the pointer is over the element
+- `whileTap` — animate while pressed
+- `drag` — make it draggable, with `dragConstraints` to keep it in bounds
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion` from `"motion/react"`.
+2. Bind `ref={constraintsRef}` on the wrapper `<div>`.
+3. Hover card → `<motion.div whileHover={{ scale: 1.1 }}>`.
+4. Tap card → `<motion.div whileTap={{ scale: 0.9 }}>`.
+5. Drag card → add `drag`, `dragConstraints={constraintsRef}`, `dragElastic={0.1}`,
+   and `whileDrag={{ scale: 1.1 }}`.
+
+</Instructions>
+
+Hover, click, and drag the cards in the preview to feel each gesture.

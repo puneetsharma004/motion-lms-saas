@@ -1,0 +1,9 @@
+{
+  "slug": "layout",
+  "order": 5,
+  "title": "Magic Layout Transitions",
+  "accent": "lime",
+  "category": "Core Concepts",
+  "summary": "Add the layout prop and Motion animates between completely different CSS layouts via FLIP.",
+  "duration": "10 min"
+}

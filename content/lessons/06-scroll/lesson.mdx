@@ -1,0 +1,17 @@
+`useScroll` gives you a `scrollYProgress` motion value (0 → 1) for the page or any
+scroll container. Feed it through `useTransform` to map that progress onto any
+style — color, opacity, scale. For one-shot reveals, `whileInView` animates an
+element the first time it scrolls into view.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion`, `useScroll`, `useTransform` from `"motion/react"`.
+2. Track the box: `const { scrollYProgress } = useScroll({ container: containerRef })`.
+3. Progress bar → `motion.div style={{ scaleX: scrollYProgress }}`.
+4. Map values: `opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3])` plus a `backgroundColor` ramp.
+5. Box 1 → `motion.div style={{ opacity, backgroundColor }}`.
+6. Box 2 → `motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ root: containerRef }}`.
+
+</Instructions>
+
+Scroll **inside the box** to drive the bar and the color ramp.

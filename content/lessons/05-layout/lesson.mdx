@@ -1,0 +1,15 @@
+Add a single `layout` prop and Motion animates an element between *any* two
+layout states — a flex-direction change, reordering, a size change — by measuring
+its position before and after the change and tweening the difference. This is the
+FLIP technique, and you get it for free. No manual coordinates.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion` from `"motion/react"`.
+2. Turn each of the three boxes into a `motion.div`.
+3. Add the `layout` prop to each. That's the whole change.
+
+</Instructions>
+
+Press **Toggle Direction** to switch between row and column — the boxes glide to
+their new positions instead of snapping.

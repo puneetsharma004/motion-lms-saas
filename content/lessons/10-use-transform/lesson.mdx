@@ -1,0 +1,17 @@
+`useMotionValue` holds a value that updates **without re-rendering React** —
+ideal for high-frequency input like pointer position. `useTransform` maps one
+motion value onto another range. Track the cursor as motion values, map them to
+`rotateX` / `rotateY`, and you get a buttery 3D tilt that never touches the React
+render path.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion`, `useMotionValue`, `useTransform` from `"motion/react"`.
+2. `const x = useMotionValue(0)`, `const y = useMotionValue(0)`.
+3. `const rotateX = useTransform(y, [-100, 100], [15, -15])`, `const rotateY = useTransform(x, [-100, 100], [-15, 15])`.
+4. In `handleMouseMove`, `x.set(mouseX)` / `y.set(mouseY)`; in `handleMouseLeave`, reset both to `0`.
+5. Card → `motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}` plus the two mouse handlers.
+
+</Instructions>
+
+Move your cursor over the card to tilt it in 3D; move away and it springs back.

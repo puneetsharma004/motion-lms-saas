@@ -1,0 +1,9 @@
+{
+  "slug": "gestures",
+  "order": 2,
+  "title": "Gestures: Hover, Tap & Drag",
+  "accent": "coral",
+  "category": "Fundamentals",
+  "summary": "Add rich interactivity with whileHover, whileTap and physics-based drag with constraints.",
+  "duration": "12 min"
+}

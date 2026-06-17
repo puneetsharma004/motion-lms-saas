@@ -1,0 +1,22 @@
+Animation in Motion is **declarative**. Instead of manually tweening values, you
+describe the target state in the `animate` prop and Motion interpolates every
+in-between frame for you.
+
+Change any value — `opacity`, `x`, `y`, `scale`, `rotate` — and the element
+springs to it. A `transition` controls *how* it gets there (duration, easing,
+spring physics).
+
+<Instructions>
+
+1. Open **Exercise.jsx** in the editor.
+2. Import `motion` from `"motion/react"`.
+3. Replace the static `<div>` with `<motion.div>`.
+4. Move the values into the `animate` prop:
+   `animate={{ opacity, x, y, scale, rotate }}`
+5. Add a smooth `transition={{ duration: 0.5, ease: "easeInOut" }}`.
+
+</Instructions>
+
+Press the buttons under the preview to drive the values, then flip to
+**Solution** to compare. Notice how CSS transitions feel clunky next to Motion's
+interpolation.

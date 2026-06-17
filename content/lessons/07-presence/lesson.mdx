@@ -1,0 +1,21 @@
+Normally React removes an element from the DOM the instant it leaves the tree —
+no chance to animate it out. `AnimatePresence` keeps the element mounted until
+its `exit` animation finishes.
+
+The rules: every child needs a stable, unique `key`, and the animating children
+must live **directly inside** `<AnimatePresence>`.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion` and `AnimatePresence` from `"motion/react"`.
+2. Wrap the `toasts.map(...)` block in `<AnimatePresence>`.
+3. Turn each toast `<div>` into a `<motion.div>` with:
+   - `initial={{ opacity: 0, y: 15, scale: 0.95 }}`
+   - `animate={{ opacity: 1, y: 0, scale: 1 }}`
+   - `exit={{ opacity: 0, scale: 0.9, y: -15 }}`
+   - `transition={{ duration: 0.2 }}`
+
+</Instructions>
+
+Add a few toasts, then click one to dismiss it — watch it animate out instead of
+vanishing.

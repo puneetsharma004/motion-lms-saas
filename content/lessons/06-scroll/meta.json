@@ -1,0 +1,9 @@
+{
+  "slug": "scroll",
+  "order": 6,
+  "title": "Scroll-Driven Animations",
+  "accent": "amber",
+  "category": "Core Concepts",
+  "summary": "Link styles to scroll position with useScroll + useTransform, and reveal on view with whileInView.",
+  "duration": "14 min"
+}

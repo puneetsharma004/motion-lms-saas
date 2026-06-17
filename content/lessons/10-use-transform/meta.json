@@ -1,0 +1,9 @@
+{
+  "slug": "useTransform",
+  "order": 10,
+  "title": "Motion Values & 3D Tilt",
+  "accent": "cyan",
+  "category": "Advanced",
+  "summary": "Map raw pointer coordinates onto rotation with useMotionValue + useTransform for a smooth 3D tilt card.",
+  "duration": "14 min"
+}

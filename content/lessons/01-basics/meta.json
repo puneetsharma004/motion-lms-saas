@@ -1,0 +1,9 @@
+{
+  "slug": "basics",
+  "order": 1,
+  "title": "Basic Animations",
+  "accent": "blue",
+  "category": "Fundamentals",
+  "summary": "Use the animate prop to smoothly interpolate opacity, position, scale and rotation.",
+  "duration": "10 min"
+}

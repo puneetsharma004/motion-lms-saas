@@ -1,0 +1,9 @@
+{
+  "slug": "stagger-grid",
+  "order": 8,
+  "title": "Grid Stagger Cascade",
+  "accent": "rose",
+  "category": "Advanced",
+  "summary": "Variants at scale: a grid parent with staggerChildren and springy cells that pop in one by one.",
+  "duration": "10 min"
+}

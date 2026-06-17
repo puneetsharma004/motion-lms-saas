@@ -1,0 +1,21 @@
+Sometimes you need to fire an animation from an event, not from a state change.
+`useAnimate` returns a `[scope, animate]` tuple: attach `scope` as a `ref` to any
+element, then call `animate(element, keyframes, options)` whenever you like — from
+clicks, effects, or chained sequences with `await`.
+
+It works on **plain HTML elements** (no `motion.div` required) and only animates
+elements inside the `scope` ref.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `useAnimate` from `"motion/react"`.
+2. `const [scope, animate] = useAnimate()`.
+3. Put `ref={scope}` on the box (a plain `<div>`).
+4. Wire the handlers — note the transition is the **3rd argument**, not nested inside the keyframes:
+   - **Jump** → `animate(scope.current, { y: [-25, 0] }, { type: "spring", stiffness: 350, damping: 12 })`
+   - **Spin** → `animate(scope.current, { rotate: [0, 360] }, { duration: 0.5 })`
+   - **Shake** → `animate(scope.current, { x: [0, -10, 10, -10, 10, 0] }, { duration: 0.4 })`
+
+</Instructions>
+
+The Jump / Spin / Shake buttons are part of the exercise — wire them up and click.

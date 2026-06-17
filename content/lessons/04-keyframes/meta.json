@@ -1,0 +1,9 @@
+{
+  "slug": "keyframes",
+  "order": 4,
+  "title": "Keyframe Cycles",
+  "accent": "teal",
+  "category": "Core Concepts",
+  "summary": "Pass arrays of values to animate through multiple states in a looping sequence.",
+  "duration": "10 min"
+}

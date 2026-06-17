@@ -1,0 +1,17 @@
+Variants let you give animation states names — `"hidden"`, `"show"` — and store
+them in plain objects. Set them once on a parent and Motion **propagates** the
+active state to every child automatically. That makes orchestration (staggering,
+delays, cascades) trivial: the parent's `transition` can stagger its children
+without you touching each one.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion` from `"motion/react"`.
+2. `containerVariants`: `hidden` → `{ opacity: 0 }`, `show` → `{ opacity: 1, transition: { staggerChildren: 0.15 } }`.
+3. `itemVariants`: `hidden` → `{ opacity: 0, y: 20 }`, `show` → `{ opacity: 1, y: 0, transition: { type: "spring" } }`.
+4. Container → `motion.div` with `variants={containerVariants}`, `initial="hidden"`, `animate={active ? "show" : "hidden"}`.
+5. Each child → `motion.div variants={itemVariants}`.
+
+</Instructions>
+
+Hit **Replay** under the preview to watch the stagger cascade again.

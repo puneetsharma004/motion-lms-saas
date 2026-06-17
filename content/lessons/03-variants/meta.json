@@ -1,0 +1,9 @@
+{
+  "slug": "variants",
+  "order": 3,
+  "title": "Variants & Orchestration",
+  "accent": "violet",
+  "category": "Fundamentals",
+  "summary": "Extract animation states into reusable variant objects and stagger children automatically.",
+  "duration": "12 min"
+}

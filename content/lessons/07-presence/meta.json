@@ -1,0 +1,9 @@
+{
+  "slug": "presence",
+  "order": 7,
+  "title": "AnimatePresence (Exit Transitions)",
+  "accent": "indigo",
+  "category": "Core Concepts",
+  "summary": "Animate elements as they leave the React tree using AnimatePresence and the exit prop.",
+  "duration": "12 min"
+}

@@ -1,0 +1,16 @@
+Any value in `animate` can be an **array** instead of a single target. Motion
+treats each entry as a keyframe and tweens through them in order. Pair that with
+a repeating `transition` and you get looping, multi-step animations from a single
+declarative prop.
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion` from `"motion/react"`.
+2. Turn the box into a `motion.div`.
+3. In `animate`, pass arrays for `scale`, `rotate`, `borderRadius`, and `backgroundColor`.
+4. Loop it: `transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}`.
+
+</Instructions>
+
+This animation loops forever — no replay needed. Try editing the array values
+and watch the cycle change live.

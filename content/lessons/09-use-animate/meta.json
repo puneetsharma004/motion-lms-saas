@@ -1,0 +1,9 @@
+{
+  "slug": "useAnimate",
+  "order": 9,
+  "title": "Imperative Animation (useAnimate)",
+  "accent": "orange",
+  "category": "Advanced",
+  "summary": "Fire animations from events with useAnimate — scope a ref, then call animate(el, keyframes, options).",
+  "duration": "12 min"
+}
