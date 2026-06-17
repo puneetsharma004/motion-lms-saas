@@ -1,0 +1,18 @@
+Big movement can make some people physically ill (vestibular disorders), so
+every OS has a **"reduce motion"** setting. Respecting it isn't optional — it's
+basic accessibility, and it's what separates polished products from flashy ones.
+`useReducedMotion()` returns `true` when the user prefers reduced motion, so you
+can swap a big transform for a gentle fade. (App-wide, you'd wrap everything in
+`<MotionConfig reducedMotion="user">`.)
+
+<Instructions>
+
+1. Import `motion` and `useReducedMotion` from `"motion/react"`.
+2. Read it: `const reduce = useReducedMotion()`.
+3. Branch the `animate`: when `reduce` is true, just pulse `opacity`; otherwise spin + scale.
+4. Show the detected value in the label.
+
+</Instructions>
+
+Toggle "reduce motion" in your OS settings and refresh — the spin becomes a calm
+fade. Same component, two experiences.

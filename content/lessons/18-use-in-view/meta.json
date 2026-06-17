@@ -1,0 +1,9 @@
+{
+  "slug": "use-in-view",
+  "order": 18,
+  "title": "Trigger on View (useInView)",
+  "accent": "blue",
+  "category": "Core Concepts",
+  "summary": "Get a plain boolean when an element enters the viewport with useInView — then drive any animation or logic off it.",
+  "duration": "10 min"
+}

@@ -1,0 +1,17 @@
+`whileInView` is great for "animate when seen," but sometimes you want the raw
+fact — *is this on screen right now?* — to drive your own logic: start a counter,
+lazy-load, fire analytics, swap text. `useInView(ref, options)` returns a plain
+boolean. Options you'll reach for: `once: true` (fire only the first time),
+`amount: 0.5` (how much must be visible), and `root` (a scroll container ref).
+
+<Instructions>
+
+1. Import `motion` and `useInView` from `"motion/react"`.
+2. Add a ref to the card and read `const inView = useInView(ref, { root: containerRef, amount: 0.6 })`.
+3. Make the card a `motion.div` and drive it: `animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}`.
+4. Show the boolean in the label so you can see it flip.
+
+</Instructions>
+
+Scroll the card into the panel — the boolean flips and everything keyed off it
+reacts. That's the building block behind reveals, counters and lazy content.

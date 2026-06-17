@@ -1,0 +1,9 @@
+{
+  "slug": "drag-constraints",
+  "order": 20,
+  "title": "Drag: Constraints & Momentum",
+  "accent": "orange",
+  "category": "Core Concepts",
+  "summary": "Keep a draggable inside its bounds with dragConstraints, and make it fling + settle with elastic and momentum.",
+  "duration": "12 min"
+}

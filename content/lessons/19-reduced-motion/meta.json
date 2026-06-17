@@ -1,0 +1,9 @@
+{
+  "slug": "reduced-motion",
+  "order": 19,
+  "title": "Respecting Reduced Motion",
+  "accent": "teal",
+  "category": "Core Concepts",
+  "summary": "Honor prefers-reduced-motion with useReducedMotion (and MotionConfig) — accessible animation that pros never skip.",
+  "duration": "10 min"
+}

@@ -1,0 +1,17 @@
+Plain `drag` lets an element go anywhere. Real draggables — sliders, sheets,
+cards — stay inside bounds and *feel* physical. Point `dragConstraints` at a
+container ref to box it in, `dragElastic` lets it stretch slightly past the edge
+and snap back, and `dragTransition` gives it momentum so a flick coasts and
+settles instead of stopping dead. `whileDrag` adds a grab affordance.
+
+<Instructions>
+
+1. Import `motion` from `"motion/react"` and keep the `constraintsRef`.
+2. Add `drag` to the puck and bound it with `dragConstraints={constraintsRef}`.
+3. Add feel: `dragElastic={0.2}` and `dragTransition={{ bounceStiffness: 400, bounceDamping: 18 }}`.
+4. Add `whileDrag={{ scale: 1.1 }}` for grab feedback.
+
+</Instructions>
+
+Fling the puck — it coasts, bumps the walls, and springs back inside. That
+physics is what makes drag UIs feel real.

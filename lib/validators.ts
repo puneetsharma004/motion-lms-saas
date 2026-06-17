@@ -107,6 +107,21 @@ export const LESSON_CHECKS: Record<string, LessonCheck[]> = {
     { id: "heightAuto", label: 'Animate height to "auto"', test: has(/height\s*:\s*["']auto["']/) },
     { id: "exit", label: "Collapse it with an exit prop", test: has(/\bexit\s*=\s*\{/) },
   ],
+  "use-in-view": [
+    { id: "import", label: 'Import motion from "motion/react"', test: has(/from\s*["']motion\/react["']/) },
+    { id: "useInView", label: "Detect visibility with useInView()", test: has(/\buseInView\s*\(/) },
+    { id: "animate", label: "Drive the card with the animate prop", test: has(/\banimate\s*=/) },
+  ],
+  "reduced-motion": [
+    { id: "import", label: 'Import motion from "motion/react"', test: has(/from\s*["']motion\/react["']/) },
+    { id: "useReducedMotion", label: "Read the preference with useReducedMotion()", test: has(/\buseReducedMotion\s*\(/) },
+    { id: "animate", label: "Branch the animation on it", test: has(/\banimate\s*=/) },
+  ],
+  "drag-constraints": [
+    { id: "drag", label: "Make the puck draggable with drag", test: has(/\bdrag\b/) },
+    { id: "constraints", label: "Bound it with dragConstraints", test: has(/dragConstraints/) },
+    { id: "momentum", label: "Add momentum/elastic (dragElastic / dragTransition)", test: has(/dragElastic|dragTransition|dragMomentum/) },
+  ],
 };
 
 export interface CheckResult {
