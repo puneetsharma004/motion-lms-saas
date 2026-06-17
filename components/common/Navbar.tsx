@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, LogOut } from "lucide-react";
 import { getUser } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import MobileNav from "@/components/common/MobileNav";
 
 export default async function Navbar() {
   // Only hits cookies (and goes dynamic) when Supabase is configured.
@@ -17,7 +18,8 @@ export default async function Navbar() {
           Motion Playground
         </Link>
 
-        <div className="flex items-center gap-3">
+        {/* Desktop nav */}
+        <div className="hidden sm:flex items-center gap-3">
           <Link
             href="/learn"
             className="text-on-surface-variant hover:text-white text-sm transition-colors"
@@ -34,7 +36,7 @@ export default async function Navbar() {
                 >
                   Dashboard
                 </Link>
-                <span className="hidden sm:inline text-xs text-on-surface-variant max-w-[140px] truncate">
+                <span className="text-xs text-on-surface-variant max-w-[140px] truncate">
                   {user.email}
                 </span>
                 <form action="/auth/signout" method="post">
@@ -44,7 +46,7 @@ export default async function Navbar() {
                     className="flex items-center gap-1.5 text-on-surface-variant hover:text-white text-xs border border-white/10 bg-white/5 px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
                   >
                     <LogOut size={13} />
-                    <span className="hidden sm:inline">Sign out</span>
+                    <span>Sign out</span>
                   </button>
                 </form>
               </div>
@@ -67,6 +69,9 @@ export default async function Navbar() {
             <ArrowUpRight size={14} />
           </a>
         </div>
+
+        {/* Mobile nav */}
+        <MobileNav email={user?.email ?? null} isConfigured={isSupabaseConfigured} />
       </div>
     </header>
   );

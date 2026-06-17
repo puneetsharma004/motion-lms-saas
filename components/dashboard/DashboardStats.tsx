@@ -27,12 +27,14 @@ export default function DashboardStats({
   lessons: DashLesson[];
   initialCompleted: string[];
 }) {
-  const { completed } = useProgress();
+  const { completed, ready } = useProgress();
 
-  const done = new Set<string>(initialCompleted);
-  for (const [slug, isDone] of Object.entries(completed)) {
-    if (isDone) done.add(slug);
-  }
+  // Before the client store hydrates (SSR + first paint) use the DB snapshot so
+  // numbers don't flash; once ready, the client store is authoritative so an
+  // untick is reflected and never resurrected by the stale snapshot.
+  const done = ready
+    ? new Set<string>(Object.keys(completed).filter((s) => completed[s]))
+    : new Set<string>(initialCompleted);
 
   const total = lessons.length;
   const completedCount = lessons.filter((l) => done.has(l.slug)).length;
