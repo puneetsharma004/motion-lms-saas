@@ -1,0 +1,9 @@
+{
+  "slug": "modal-dialog",
+  "order": 13,
+  "title": "Modal Dialog with Backdrop",
+  "accent": "rose",
+  "category": "Real-World Projects",
+  "summary": "A production dialog: backdrop fade, spring pop-in, and a smooth exit — the AnimatePresence pattern every app needs.",
+  "duration": "12 min"
+}

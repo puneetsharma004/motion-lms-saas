@@ -1,0 +1,9 @@
+{
+  "slug": "svg-path",
+  "order": 16,
+  "title": "SVG Line Drawing",
+  "accent": "lime",
+  "category": "Advanced",
+  "summary": "Animate pathLength to 'draw' SVG strokes — the technique behind animated checkmarks, logos and signatures.",
+  "duration": "12 min"
+}

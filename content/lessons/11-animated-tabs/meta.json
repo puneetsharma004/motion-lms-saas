@@ -1,0 +1,9 @@
+{
+  "slug": "animated-tabs",
+  "order": 11,
+  "title": "Animated Tabs (Shared Layout)",
+  "accent": "indigo",
+  "category": "Real-World Projects",
+  "summary": "The sliding pill behind active tabs on dashboards and pricing pages — built with a single shared layoutId.",
+  "duration": "12 min"
+}

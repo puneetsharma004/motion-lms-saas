@@ -1,0 +1,18 @@
+Pick up almost any modern dashboard or pricing page and you'll see it: a little
+pill that *slides* under the active tab instead of snapping. The trick is one
+shared element. Give a `motion.span` the same `layoutId` and render it only
+inside the active tab — when the active tab changes, Motion animates the pill
+from its old position to the new one automatically (FLIP under the hood).
+
+<Instructions>
+
+1. Open **Exercise.jsx** and import `motion` from `"motion/react"`.
+2. Inside the active tab, render a `motion.span` with `layoutId="pill"` as the highlight — absolutely positioned, `inset-0`.
+3. Render it **only** when `i === active`, so the same element moves between tabs.
+4. Add a spring `transition` like `transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}`.
+5. Keep the label above the pill with `relative z-10`.
+
+</Instructions>
+
+Click between tabs and watch the pill glide. No width math, no manual
+positioning — `layoutId` does all of it.

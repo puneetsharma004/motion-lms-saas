@@ -70,6 +70,43 @@ export const LESSON_CHECKS: Record<string, LessonCheck[]> = {
     { id: "motionValue", label: "Create motion values with useMotionValue()", test: has(/\buseMotionValue\s*\(/) },
     { id: "useTransform", label: "Derive a value with useTransform()", test: has(/\buseTransform\s*\(/) },
   ],
+
+  // --- Real-World Projects ---
+  "animated-tabs": [
+    { id: "import", label: 'Import motion from "motion/react"', test: has(/from\s*["']motion\/react["']/) },
+    { id: "element", label: "Render a <motion.*> element", test: has(/<\s*motion\.[a-z]/i) },
+    { id: "layoutId", label: "Share the pill across tabs with layoutId", test: has(/\blayoutId\s*=/) },
+  ],
+  "sticky-nav": [
+    { id: "useScroll", label: "Track scroll with useScroll()", test: has(/\buseScroll\s*\(/) },
+    { id: "useTransform", label: "Map scroll to styles with useTransform()", test: has(/\buseTransform\s*\(/) },
+    { id: "element", label: "Animate the header with a <motion.*> element", test: has(/<\s*motion\.[a-z]/i) },
+  ],
+  "modal-dialog": [
+    { id: "import", label: 'Import motion from "motion/react"', test: has(/from\s*["']motion\/react["']/) },
+    { id: "presence", label: "Wrap the dialog in <AnimatePresence>", test: has(/<\s*AnimatePresence/) },
+    { id: "exit", label: "Animate open + close with an exit prop", test: has(/\bexit\s*=\s*\{/) },
+  ],
+  transitions: [
+    { id: "animate", label: "Animate with the animate prop", test: has(/\banimate\s*=\s*\{/) },
+    { id: "spring", label: 'Use a spring transition (type: "spring")', test: has(/type\s*:\s*["']spring["']/) },
+    { id: "tune", label: "Tune it with stiffness / damping / bounce", test: has(/stiffness|damping|bounce/) },
+  ],
+  "scroll-parallax": [
+    { id: "useScroll", label: "Track the element with useScroll()", test: has(/\buseScroll\s*\(/) },
+    { id: "offset", label: "Use a target + offset range", test: has(/offset\s*:/) },
+    { id: "useTransform", label: "Map progress to movement with useTransform()", test: has(/\buseTransform\s*\(/) },
+  ],
+  "svg-path": [
+    { id: "import", label: 'Import motion from "motion/react"', test: has(/from\s*["']motion\/react["']/) },
+    { id: "element", label: "Use a motion SVG element (motion.path / motion.circle)", test: has(/<\s*motion\.(path|circle|line|rect|ellipse|polyline|polygon)/i) },
+    { id: "pathLength", label: "Animate pathLength from 0 to 1", test: has(/pathLength/) },
+  ],
+  accordion: [
+    { id: "presence", label: "Wrap the panel in <AnimatePresence>", test: has(/<\s*AnimatePresence/) },
+    { id: "heightAuto", label: 'Animate height to "auto"', test: has(/height\s*:\s*["']auto["']/) },
+    { id: "exit", label: "Collapse it with an exit prop", test: has(/\bexit\s*=\s*\{/) },
+  ],
 };
 
 export interface CheckResult {

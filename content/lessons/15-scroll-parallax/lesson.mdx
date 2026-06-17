@@ -1,0 +1,18 @@
+The depth effect on modern marketing sites — where a background drifts slower
+than the content in front of it — is parallax. The key is `useScroll` with a
+**`target`** and **`offset`**: instead of whole-page progress, you get `0 → 1`
+for *one element travelling through the viewport*. `offset: ["start end", "end start"]`
+means "0 when the target's top hits the bottom of the view, 1 when its bottom
+leaves the top." Map that with `useTransform` to move a layer.
+
+<Instructions>
+
+1. Import `motion`, `useScroll`, `useTransform` from `"motion/react"`.
+2. Wire the card: `useScroll({ container: containerRef, target: targetRef, offset: ["start end", "end start"] })`.
+3. Map progress to movement: `const y = useTransform(scrollYProgress, [0, 1], ["-30%", "30%"])`.
+4. Make the background layer a `motion.div` with `style={{ y }}`.
+
+</Instructions>
+
+Scroll the card through the panel — the gradient drifts at its own pace behind
+the text. That speed difference is the whole illusion.

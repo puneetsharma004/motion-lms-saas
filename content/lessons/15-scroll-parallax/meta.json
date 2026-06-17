@@ -1,0 +1,9 @@
+{
+  "slug": "scroll-parallax",
+  "order": 15,
+  "title": "Scroll Parallax",
+  "accent": "teal",
+  "category": "Core Concepts",
+  "summary": "Track an element through the viewport with useScroll target + offset, and move layers at different speeds.",
+  "duration": "12 min"
+}

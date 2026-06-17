@@ -1,0 +1,9 @@
+{
+  "slug": "accordion",
+  "order": 17,
+  "title": "Accordion / FAQ",
+  "accent": "amber",
+  "category": "Real-World Projects",
+  "summary": "Smooth expand/collapse by animating height auto with AnimatePresence — the FAQ pattern on every landing page.",
+  "duration": "12 min"
+}

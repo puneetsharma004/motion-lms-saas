@@ -1,0 +1,17 @@
+That polished header that shrinks, frosts, and tightens up the moment you start
+scrolling? It's just a few styles wired to scroll position. `useScroll` gives you
+a `scrollY` motion value; `useTransform` maps a scroll range onto any style — so
+as `scrollY` goes `0 → 80`, the header height eases `72 → 52`, the brand scales
+down, and the background fades in. No scroll listeners, no state, no jank.
+
+<Instructions>
+
+1. Import `motion`, `useScroll`, `useTransform` from `"motion/react"`.
+2. Read scroll on the panel: `const { scrollY } = useScroll({ container: containerRef })`.
+3. Map ranges with `useTransform` — a `height` (`72 → 52`), a `backgroundColor` ramp, and a `scale` for the brand.
+4. Make the header a `motion.header` with `style={{ height, backgroundColor }}` and the brand a `motion.span` with `style={{ scale }}`.
+
+</Instructions>
+
+Scroll **inside the panel** — everything reacts in real time, driven straight
+off scroll position.

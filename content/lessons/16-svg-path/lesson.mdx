@@ -1,0 +1,17 @@
+Those satisfying "draw-on" checkmarks and logo reveals are one of Motion's
+neatest tricks. Any SVG `motion.path`, `motion.circle`, etc. accepts a special
+`pathLength` value: animate it from `0 → 1` and Motion strokes the shape on as if
+drawn by hand (it handles the `stroke-dasharray` math for you). Stagger multiple
+paths with `delay` and you get a full reveal.
+
+<Instructions>
+
+1. Import `motion` from `"motion/react"`.
+2. Turn the `<circle>` and `<path>` into `motion.circle` / `motion.path`.
+3. Animate each with `initial={{ pathLength: 0 }}` and `animate={{ pathLength: 1 }}`.
+4. Give the check a `delay` so it draws *after* the circle (e.g. `transition={{ duration: 0.6, delay: 1 }}`).
+
+</Instructions>
+
+Hit **Run** and watch the circle sweep in, then the check. Same idea scales to
+logos, icons and signatures.

@@ -1,0 +1,9 @@
+{
+  "slug": "sticky-nav",
+  "order": 12,
+  "title": "Shrinking Sticky Navbar",
+  "accent": "cyan",
+  "category": "Real-World Projects",
+  "summary": "The header that condenses and frosts as you scroll — scroll-linked styling with useScroll + useTransform.",
+  "duration": "14 min"
+}

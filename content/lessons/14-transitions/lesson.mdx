@@ -1,0 +1,19 @@
+`animate` decides *what* changes; `transition` decides *how* it feels — and it's
+the difference between "fine" and "delightful." Motion has two main types:
+
+- **Tween** — time-based: `transition={{ duration: 0.4, ease: "easeInOut" }}`.
+- **Spring** — physics-based: `transition={{ type: "spring", stiffness: 300, damping: 18 }}`. Higher `stiffness` = snappier; lower `damping` = more bounce. (You can also just set `bounce`.)
+
+Springs feel natural because they carry momentum — which is why real product UIs lean on them.
+
+<Instructions>
+
+1. Open **Exercise.jsx**. The box already animates with a plain tween.
+2. Change its `transition` to `type: "spring"`.
+3. Tune it with `stiffness` and `damping` (try `300` / `18`), or set a `bounce`.
+4. Hit **Toggle** and compare the feel against the old tween.
+
+</Instructions>
+
+Play with the numbers — low damping overshoots and wobbles, high stiffness
+snaps. This intuition carries into every animation you build.

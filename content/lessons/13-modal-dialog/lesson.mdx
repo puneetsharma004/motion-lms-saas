@@ -1,0 +1,17 @@
+Dialogs, command palettes, sheets — they all share one problem: React unmounts a
+component the instant you close it, so there's no time to animate *out*.
+`AnimatePresence` keeps the element in the tree until its `exit` animation
+finishes. Wrap your conditional UI in it, give each piece an `exit`, and you get
+a backdrop that fades and a dialog that springs in and eases out.
+
+<Instructions>
+
+1. Import `motion` and `AnimatePresence` from `"motion/react"`.
+2. Wrap the `{open && (...)}` block in `<AnimatePresence>`.
+3. Backdrop → `motion.div` with `initial` / `animate` / `exit` on `opacity`.
+4. Dialog → `motion.div` with `initial` / `animate` / `exit` on `scale` + `y`, plus a spring `transition`.
+
+</Instructions>
+
+Open and close it a few times — the **exit** is what makes it feel real instead
+of snapping away.

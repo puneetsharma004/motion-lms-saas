@@ -1,0 +1,9 @@
+{
+  "slug": "transitions",
+  "order": 14,
+  "title": "Transitions & Springs",
+  "accent": "violet",
+  "category": "Fundamentals",
+  "summary": "Control how an animation feels — springs (stiffness, damping, bounce) vs tweens (duration, ease).",
+  "duration": "10 min"
+}

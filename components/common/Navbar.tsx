@@ -27,7 +27,13 @@ export default async function Navbar() {
 
           {isSupabaseConfigured &&
             (user ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/dashboard"
+                  className="text-on-surface-variant hover:text-white text-sm transition-colors"
+                >
+                  Dashboard
+                </Link>
                 <span className="hidden sm:inline text-xs text-on-surface-variant max-w-[140px] truncate">
                   {user.email}
                 </span>

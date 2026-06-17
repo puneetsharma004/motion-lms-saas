@@ -1,0 +1,17 @@
+Animating something open is deceptively hard with plain CSS — you can't
+transition to `height: auto`. Motion can. Render the panel only when open inside
+`AnimatePresence`, animate `height` from `0 → "auto"` (and back on `exit`), and
+Motion measures the real height for you. Add `overflow-hidden` so the content
+clips while it slides. That's the entire FAQ pattern.
+
+<Instructions>
+
+1. Import `motion` and `AnimatePresence` from `"motion/react"`.
+2. Wrap each answer in `<AnimatePresence initial={false}>` and render it only when that row is open.
+3. Animate the panel: `initial={{ height: 0, opacity: 0 }}`, `animate={{ height: "auto", opacity: 1 }}`, `exit={{ height: 0, opacity: 0 }}`.
+4. Keep `overflow-hidden` on the panel so it clips as it expands.
+
+</Instructions>
+
+Open and close the rows — the height eases instead of snapping. This is the most
+reused Motion pattern in production UIs.
