@@ -2,17 +2,85 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check } from "lucide-react";
-import { PLANS, CURRENCY_META, formatPrice, type Currency } from "@/lib/plans";
+import { Check, Loader2 } from "lucide-react";
+import { PLANS, CURRENCY_META, formatPrice, type Currency, type Plan } from "@/lib/plans";
+
+interface RazorpayOptions {
+  key: string;
+  order_id: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description?: string;
+  theme?: { color?: string };
+  handler: () => void;
+}
+
+function loadRazorpay(): Promise<boolean> {
+  return new Promise((resolve) => {
+    const w = window as unknown as { Razorpay?: unknown };
+    if (w.Razorpay) return resolve(true);
+    const s = document.createElement("script");
+    s.src = "https://checkout.razorpay.com/v1/checkout.js";
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.body.appendChild(s);
+  });
+}
 
 /**
- * Pricing cards with an India ₹ / International $ toggle. Checkout (Razorpay /
- * Stripe) wires in next; for now signed-out users are sent to sign in and
- * signed-in users see a "coming soon" notice.
+ * Pricing cards with an India ₹ / International $ toggle. INR checkout goes
+ * through Razorpay; USD will go through Stripe (coming next). Access is granted
+ * by the webhook after payment, so we just redirect to the lessons afterwards.
  */
 export default function PricingCards({ signedIn }: { signedIn: boolean }) {
   const [currency, setCurrency] = useState<Currency>("INR");
-  const [notice, setNotice] = useState(false);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  async function subscribe(plan: Plan) {
+    setNotice(null);
+    if (currency !== "INR") {
+      setNotice("International checkout (Stripe) is coming soon — switch to ₹ India for now.");
+      return;
+    }
+    setBusy(plan.id);
+    try {
+      const res = await fetch("/api/checkout/razorpay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId: plan.id }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json().catch(() => ({ error: "" }));
+        setNotice(error || "Could not start checkout. Please try again.");
+        return;
+      }
+      const { orderId, amount, currency: cur, keyId } = await res.json();
+      const ok = await loadRazorpay();
+      if (!ok) {
+        setNotice("Couldn't load the payment window. Check your connection.");
+        return;
+      }
+      const Razorpay = (
+        window as unknown as { Razorpay: new (o: RazorpayOptions) => { open: () => void } }
+      ).Razorpay;
+      new Razorpay({
+        key: keyId,
+        order_id: orderId,
+        amount,
+        currency: cur,
+        name: "The Coders Playground",
+        description: `${plan.label} — Motion Playground`,
+        theme: { color: "#d0bcff" },
+        handler: () => {
+          window.location.href = "/learn?welcome=1";
+        },
+      }).open();
+    } finally {
+      setBusy(null);
+    }
+  }
 
   return (
     <div>
@@ -58,10 +126,7 @@ export default function PricingCards({ signedIn }: { signedIn: boolean }) {
                 <span className="text-3xl font-extrabold text-white">
                   {formatPrice(plan.price[currency], currency)}
                 </span>
-                <span className="text-sm text-on-surface-variant">
-                  {" "}
-                  / {plan.months} mo
-                </span>
+                <span className="text-sm text-on-surface-variant"> / {plan.months} mo</span>
               </div>
               <ul className="space-y-2 mb-6 flex-1">
                 {plan.perks.map((p) => (
@@ -72,10 +137,12 @@ export default function PricingCards({ signedIn }: { signedIn: boolean }) {
               </ul>
               {signedIn ? (
                 <button
-                  onClick={() => setNotice(true)}
-                  className={`w-full px-5 py-2.5 rounded-full text-sm font-bold transition-all cursor-pointer ${ctaClass}`}
+                  onClick={() => subscribe(plan)}
+                  disabled={busy === plan.id}
+                  className={`w-full px-5 py-2.5 rounded-full text-sm font-bold transition-all cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2 ${ctaClass}`}
                 >
-                  Choose {plan.label}
+                  {busy === plan.id && <Loader2 size={15} className="animate-spin" />}
+                  {busy === plan.id ? "Starting…" : `Choose ${plan.label}`}
                 </button>
               ) : (
                 <Link
@@ -91,10 +158,7 @@ export default function PricingCards({ signedIn }: { signedIn: boolean }) {
       </div>
 
       {notice && (
-        <p className="text-center text-xs text-on-surface-variant mt-6">
-          Secure checkout (Razorpay / Stripe) is being set up — you&apos;ll be able
-          to subscribe here shortly.
-        </p>
+        <p className="text-center text-xs text-on-surface-variant mt-6">{notice}</p>
       )}
 
       <p className="text-center text-xs text-on-surface-variant/60 mt-8">
