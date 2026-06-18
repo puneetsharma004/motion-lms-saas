@@ -49,19 +49,37 @@ export default async function LessonPage({
   return (
     <article className="max-w-5xl mx-auto px-gutter py-10">
       <ReadingProgress accent={lesson.meta.accent} />
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <span
-          className="font-label-caps text-xs tracking-widest uppercase font-bold"
-          style={{ color: accentVar }}
-        >
-          {lesson.meta.category}
-        </span>
-        <h1 className="text-2xl md:text-3xl font-bold text-white">
-          {lesson.meta.title}
-        </h1>
-        <div className="h-px bg-white/10 flex-grow" />
-        {!locked && <CompletionToggle slug={lesson.meta.slug} />}
+      {/* Header — category is an eyebrow label above the title; the action sits
+          top-right and the title wraps beneath it on small screens. */}
+      <div className="flex items-start justify-between gap-3 mb-8">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
+            <span
+              className="font-label-caps text-xs tracking-widest uppercase font-bold"
+              style={{ color: accentVar }}
+            >
+              {lesson.meta.category}
+            </span>
+            {lesson.meta.duration && (
+              <>
+                <span className="text-on-surface-variant/40" aria-hidden>
+                  ·
+                </span>
+                <span className="text-xs text-on-surface-variant/70">
+                  {lesson.meta.duration}
+                </span>
+              </>
+            )}
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+            {lesson.meta.title}
+          </h1>
+        </div>
+        {!locked && (
+          <div className="shrink-0">
+            <CompletionToggle slug={lesson.meta.slug} />
+          </div>
+        )}
       </div>
 
       {locked ? (
