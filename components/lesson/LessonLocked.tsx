@@ -2,24 +2,26 @@ import Link from "next/link";
 import { Lock, Check } from "lucide-react";
 
 /**
- * Shown in place of a gated lesson's content + sandbox when a signed-out user
- * opens a non-free lesson. Keeps the teaser visible so it's an invitation, not
- * a dead end.
+ * Paywall shown in place of a gated lesson's content + sandbox when the viewer
+ * doesn't have an active subscription. Keeps the teaser visible so it reads as
+ * an invitation, not a dead end.
  */
 export default function LessonLocked({
   slug,
   summary,
   accent,
+  signedIn,
 }: {
   slug: string;
   summary: string;
   accent: string;
+  signedIn: boolean;
 }) {
   const accentVar = `var(--color-accent-${accent})`;
   const perks = [
-    "Unlock all 10 lessons",
-    "Save progress across devices",
-    "Auto-graded exercises",
+    "All 29 lessons incl. Real-World projects",
+    "Auto-graded exercises with live preview",
+    "Progress synced across your devices",
   ];
 
   return (
@@ -32,7 +34,7 @@ export default function LessonLocked({
       </div>
 
       <h2 className="text-xl font-bold text-white mb-2">
-        Create a free account to continue
+        Unlock the full course
       </h2>
       <p className="text-sm text-on-surface-variant mb-6 max-w-md mx-auto">
         {summary}
@@ -48,11 +50,19 @@ export default function LessonLocked({
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
         <Link
-          href={`/login?next=/learn/${slug}`}
-          className="px-6 py-3 rounded-full bg-primary text-[#3c0091] text-sm font-bold hover:shadow-[0_0_24px_rgba(208,188,255,0.35)] transition-all"
+          href="/pricing"
+          className="px-6 py-3 rounded-full bg-primary text-on-primary text-sm font-bold hover:shadow-[0_0_24px_rgba(208,188,255,0.35)] transition-all"
         >
-          Sign in — it&apos;s free
+          View plans
         </Link>
+        {!signedIn && (
+          <Link
+            href={`/login?next=/learn/${slug}`}
+            className="px-6 py-3 rounded-full border border-white/10 bg-white/5 text-sm font-medium text-on-surface-variant hover:text-white transition-colors"
+          >
+            Already a member? Sign in
+          </Link>
+        )}
         <Link
           href="/learn"
           className="px-6 py-3 rounded-full border border-white/10 bg-white/5 text-sm font-medium text-on-surface-variant hover:text-white transition-colors"

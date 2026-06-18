@@ -10,6 +10,8 @@ import ReadingProgress from "@/components/common/ReadingProgress";
 import LessonLocked from "@/components/lesson/LessonLocked";
 import { getUser } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { hasAccess } from "@/lib/access";
+import { PRODUCT } from "@/lib/plans";
 
 export function generateStaticParams() {
   return getAllLessonMeta().map((m) => ({ lesson: m.slug }));
@@ -42,9 +44,13 @@ export default async function LessonPage({
 
   const accentVar = `var(--color-accent-${lesson.meta.accent})`;
 
-  // Gate non-free lessons behind a (free) account — only when auth is set up.
+  // Gate non-free lessons behind an active subscription — only when auth is set
+  // up. Free lessons (1–3) are always open; the rest require an entitlement.
   const user = isSupabaseConfigured ? await getUser() : null;
-  const locked = isSupabaseConfigured && !user && !isLessonFree(lesson.meta);
+  const locked =
+    isSupabaseConfigured &&
+    !isLessonFree(lesson.meta) &&
+    !(await hasAccess(PRODUCT, user));
 
   return (
     <article className="max-w-5xl mx-auto px-gutter py-10">
@@ -87,6 +93,7 @@ export default async function LessonPage({
           slug={lesson.meta.slug}
           summary={lesson.meta.summary}
           accent={lesson.meta.accent}
+          signedIn={Boolean(user)}
         />
       ) : (
         <>

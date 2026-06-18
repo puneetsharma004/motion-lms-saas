@@ -4,6 +4,7 @@ import MobileSidebar from "@/components/course/MobileSidebar";
 import { getLessonsByCategory, isLessonFree } from "@/lib/content";
 import { getUser } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { hasAccess } from "@/lib/access";
 
 export default async function LearnLayout({
   children,
@@ -20,9 +21,9 @@ export default async function LearnLayout({
     })),
   }));
 
-  // Lock icons appear on gated lessons only while gating is active.
+  // Lock icons appear on paid lessons until the viewer has an active subscription.
   const user = isSupabaseConfigured ? await getUser() : null;
-  const locked = isSupabaseConfigured && !user;
+  const locked = isSupabaseConfigured && !(await hasAccess(undefined, user));
 
   return (
     <>
