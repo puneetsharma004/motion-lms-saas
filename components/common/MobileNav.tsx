@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X, ArrowUpRight, LogOut } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -20,6 +20,17 @@ export default function MobileNav({
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
+  // Lock the page while the drawer is open so scrolling the overlay doesn't move
+  // the page behind it — the blurred backdrop stays put.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const linkClass =
     "px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors";
 
@@ -37,14 +48,17 @@ export default function MobileNav({
         {open && (
           <>
             <motion.div
-              className="fixed inset-0 z-60 bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 z-60 bg-black/60 backdrop-blur-md"
               onClick={close}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             />
+            {/* top-0 + bottom-0 (no h-screen) pins the drawer to the *visible*
+                viewport — correct under the mobile address bar. Scrolls
+                internally if the menu ever outgrows the screen. */}
             <motion.div
-              className="fixed top-0 right-0 bottom-0 z-61 w-64 max-w-[80vw] h-screen bg-surface-container border-l border-white/10 p-5 flex flex-col gap-1"
+              className="fixed top-0 right-0 bottom-0 z-61 w-64 max-w-[80vw] overflow-y-auto bg-surface-container border-l border-white/10 p-5 flex flex-col gap-1"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
