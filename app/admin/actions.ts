@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getUser } from "@/lib/supabase/server";
-import { isAdmin } from "@/lib/admin";
+import { isAdminUser } from "@/lib/admin";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { grantEntitlement } from "@/lib/entitlements";
 import { PRODUCT } from "@/lib/plans";
@@ -10,7 +10,7 @@ import { PRODUCT } from "@/lib/plans";
 /** Re-check admin inside every action (server actions aren't covered by page gates). */
 async function ensureAdmin() {
   const user = await getUser();
-  if (!isAdmin(user)) throw new Error("Not authorized");
+  if (!(await isAdminUser(user))) throw new Error("Not authorized");
   return createAdminClient();
 }
 

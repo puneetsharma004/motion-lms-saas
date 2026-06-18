@@ -74,6 +74,9 @@ export default function MobileNav({
               <Link href="/learn" onClick={close} className={linkClass}>
                 Lessons
               </Link>
+              <Link href="/pricing" onClick={close} className={linkClass}>
+                Pricing
+              </Link>
 
               {isConfigured && email && (
                 <Link href="/dashboard" onClick={close} className={linkClass}>

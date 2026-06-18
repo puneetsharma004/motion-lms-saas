@@ -2,13 +2,13 @@ import Link from "next/link";
 import { ArrowUpRight, LogOut } from "lucide-react";
 import { getUser } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { isAdmin } from "@/lib/admin";
+import { isAdminUser } from "@/lib/admin";
 import MobileNav from "@/components/common/MobileNav";
 
 export default async function Navbar() {
   // Only hits cookies (and goes dynamic) when Supabase is configured.
   const user = isSupabaseConfigured ? await getUser() : null;
-  const admin = isAdmin(user);
+  const admin = await isAdminUser(user);
 
   return (
     <header className="bg-surface-container/60 backdrop-blur-xl sticky top-0 w-full z-50 border-b border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
@@ -27,6 +27,12 @@ export default async function Navbar() {
             className="text-on-surface-variant hover:text-white text-sm transition-colors"
           >
             Lessons
+          </Link>
+          <Link
+            href="/pricing"
+            className="text-on-surface-variant hover:text-white text-sm transition-colors"
+          >
+            Pricing
           </Link>
 
           {isSupabaseConfigured &&
