@@ -3,168 +3,160 @@
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-/** localStorage key holding the per-lesson completion map (slug -> boolean). */
-export const PROGRESS_KEY = "motion_playground_completed";
+/**
+ * Per-user lesson completion, offline-first with DB sync.
+ *
+ * Progress is namespaced per identity in localStorage (`mp_progress_<uid>`, or
+ * `mp_progress_anon` when logged out) and reset whenever the signed-in user
+ * changes — so two accounts on the same browser never share progress. The DB is
+ * the source of truth when signed in; anonymous (pre-login) progress is migrated
+ * up once on sign-in and then cleared so it can't leak to the next account.
+ */
+const ANON_KEY = "mp_progress_anon";
+const keyFor = (uid: string | null) => (uid ? `mp_progress_${uid}` : ANON_KEY);
 
 export type CompletionMap = Record<string, boolean>;
-
 const EMPTY: CompletionMap = {};
 
-/**
- * Module-level store. Lives for the whole client session and survives App Router
- * navigations (which don't reload JS), so an optimistic change — especially an
- * *untick* — persists as you move between pages instead of being resurrected by
- * a fresh DB read. The DB is reconciled once per auth state (see hydrateFromDB),
- * not on every mount, which is what previously undid unticks.
- */
 let cache: CompletionMap | null = null;
+let currentKey = ANON_KEY;
+let currentUserId: string | null | undefined = undefined; // undefined = unknown
+let authWired = false;
 const listeners = new Set<() => void>();
-/** undefined = not yet hydrated; otherwise the userId|null we last hydrated for. */
-let hydratedFor: string | null | undefined = undefined;
-let hydrating = false;
 
-function readLocal(): CompletionMap {
+function read(key: string): CompletionMap {
   try {
-    return JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? "{}");
+    return JSON.parse(localStorage.getItem(key) ?? "{}");
   } catch {
     return {};
   }
 }
-
-function persistLocal(map: CompletionMap) {
+function write(key: string, map: CompletionMap) {
   try {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(map));
+    localStorage.setItem(key, JSON.stringify(map));
   } catch {
-    /* ignore quota / unavailable */
+    /* ignore */
   }
 }
-
-function getSnapshot(): CompletionMap {
-  if (cache === null) cache = readLocal();
-  return cache;
+function emit() {
+  listeners.forEach((l) => l());
 }
-
-function getServerSnapshot(): CompletionMap {
-  return EMPTY;
-}
-
-// Hydration-safe "running on the client" flag (false on the server, true after
-// mount) without setState-in-effect.
-const noopSubscribe = () => () => {};
-const clientTrue = () => true;
-const clientFalse = () => false;
-
 function subscribe(cb: () => void) {
   listeners.add(cb);
   return () => {
     listeners.delete(cb);
   };
 }
-
-function emit() {
-  listeners.forEach((l) => l());
+function getSnapshot(): CompletionMap {
+  if (cache === null) cache = read(currentKey);
+  return cache;
 }
-
-function setCache(next: CompletionMap) {
-  cache = next;
-  persistLocal(next);
+function getServerSnapshot(): CompletionMap {
+  return EMPTY;
+}
+function setCache(map: CompletionMap) {
+  cache = map;
+  write(currentKey, map);
   emit();
 }
 
-// Cross-tab sync: pick up changes made in other tabs.
+// Hydration-safe "on the client" flag.
+const noopSubscribe = () => () => {};
+const clientTrue = () => true;
+const clientFalse = () => false;
+
 if (typeof window !== "undefined") {
   window.addEventListener("storage", (e) => {
-    if (e.key === PROGRESS_KEY) {
-      cache = readLocal();
+    if (e.key === currentKey) {
+      cache = read(currentKey);
       emit();
     }
   });
 }
 
-/**
- * Reconcile with the DB once per auth state. First time signed in we union the
- * pre-login local progress with the DB (and push local-only completions up), so
- * nothing done before signing in is lost. After that the in-memory cache is the
- * session's source of truth — we do NOT re-pull on later navigations, which is
- * what used to resurrect unticked lessons.
- */
-async function hydrateFromDB() {
-  if (hydrating) return;
-  const supabase = createClient();
-  if (!supabase) return;
-  hydrating = true;
-  try {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    const userId = session?.user?.id ?? null;
-    if (hydratedFor === userId) return;
-    if (!userId) {
-      hydratedFor = null;
-      return;
-    }
+/** Switch active identity and load its progress (DB is truth when signed in). */
+async function switchUser(userId: string | null) {
+  if (currentUserId === userId) return;
+  currentUserId = userId;
+  currentKey = keyFor(userId);
 
+  if (!userId) {
+    cache = read(ANON_KEY);
+    emit();
+    return;
+  }
+
+  const next = read(currentKey);
+  const supabase = createClient();
+
+  if (supabase) {
     const { data } = await supabase
       .from("lesson_progress")
       .select("lesson_slug")
       .eq("user_id", userId);
-    const dbSlugs = ((data ?? []) as { lesson_slug: string }[]).map(
-      (r) => r.lesson_slug,
-    );
+    const dbSlugs = ((data ?? []) as { lesson_slug: string }[]).map((r) => r.lesson_slug);
+    for (const s of dbSlugs) next[s] = true;
 
-    const local = getSnapshot();
-    const merged: CompletionMap = {};
-    for (const s of dbSlugs) merged[s] = true;
-    for (const s of Object.keys(local)) if (local[s]) merged[s] = true;
+    // One-time migration of anonymous (pre-login) progress into this account.
+    const anon = read(ANON_KEY);
+    const anonSlugs = Object.keys(anon).filter((s) => anon[s]);
+    for (const s of anonSlugs) next[s] = true;
 
-    const toPush = Object.keys(local).filter(
-      (s) => local[s] && !dbSlugs.includes(s),
+    const toPush = [...new Set(Object.keys(next).filter((s) => next[s]))].filter(
+      (s) => !dbSlugs.includes(s),
     );
     if (toPush.length) {
       await supabase
         .from("lesson_progress")
         .upsert(toPush.map((s) => ({ user_id: userId, lesson_slug: s })));
     }
-
-    hydratedFor = userId;
-    setCache(merged);
-  } finally {
-    hydrating = false;
+    // Clear anon so it never carries over to a different account on this browser.
+    write(ANON_KEY, {});
   }
+
+  write(currentKey, next);
+  cache = next;
+  emit();
 }
 
-function writeRemote(slug: string, done: boolean) {
+function wireAuth() {
+  if (authWired) return;
+  authWired = true;
   const supabase = createClient();
-  if (!supabase) return;
+  if (!supabase) {
+    void switchUser(null);
+    return;
+  }
   void supabase.auth.getSession().then(({ data: { session } }) => {
-    const userId = session?.user?.id;
-    if (!userId) return;
-    if (done) {
-      void supabase
-        .from("lesson_progress")
-        .upsert({ user_id: userId, lesson_slug: slug });
-    } else {
-      void supabase
-        .from("lesson_progress")
-        .delete()
-        .eq("user_id", userId)
-        .eq("lesson_slug", slug);
-    }
+    void switchUser(session?.user?.id ?? null);
+  });
+  supabase.auth.onAuthStateChange((_event, session) => {
+    void switchUser(session?.user?.id ?? null);
   });
 }
 
-/**
- * Reactive lesson-completion shared across components. Offline-first (instant
- * localStorage) with background DB mirroring when signed in. `ready` flips true
- * after the first client mount so consumers can prefer a server-provided
- * snapshot until then (avoids flashes without re-introducing the untick bug).
- */
+function writeRemote(slug: string, done: boolean) {
+  if (!currentUserId) return; // anonymous → localStorage only
+  const supabase = createClient();
+  if (!supabase) return;
+  const uid = currentUserId;
+  if (done) {
+    void supabase.from("lesson_progress").upsert({ user_id: uid, lesson_slug: slug });
+  } else {
+    void supabase
+      .from("lesson_progress")
+      .delete()
+      .eq("user_id", uid)
+      .eq("lesson_slug", slug);
+  }
+}
+
 export function useProgress() {
   const completed = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const ready = useSyncExternalStore(noopSubscribe, clientTrue, clientFalse);
 
   useEffect(() => {
-    void hydrateFromDB();
+    wireAuth();
   }, []);
 
   const persist = useCallback((slug: string, done: boolean) => {
@@ -180,7 +172,6 @@ export function useProgress() {
     [persist],
   );
 
-  /** Mark a lesson done idempotently — used by auto-validation. Never un-marks. */
   const complete = useCallback(
     (slug: string) => {
       if (getSnapshot()[slug]) return;
