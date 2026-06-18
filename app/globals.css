@@ -154,12 +154,19 @@ body {
 
 /* Stack the sandbox editor/preview vertically on small screens. Targeted via
    the outer container (.sandbox-root) so it doesn't depend on how Sandpack
-   merges the layout className. */
+   merges the layout className.
+
+   `flex: none` is essential: once the layout is a column, the panes' main axis
+   is vertical, and Sandpack's default `flex: 1` (flex-basis 0) would otherwise
+   override our explicit pane height and collapse them to 0. */
 @media (max-width: 768px) {
   .sandbox-root .sp-layout {
     flex-direction: column;
+    height: auto;
   }
   .sandbox-root .sp-layout > .sp-stack {
     width: 100%;
+    min-width: 0;
+    flex: none;
   }
 }
