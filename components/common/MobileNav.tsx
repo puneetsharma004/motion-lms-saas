@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Menu, X, ArrowUpRight, LogOut } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -34,17 +35,11 @@ export default function MobileNav({
   const linkClass =
     "px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:text-white hover:bg-white/5 transition-colors";
 
-  return (
-    <div className="sm:hidden">
-      <button
-        onClick={() => setOpen(true)}
-        aria-label="Open menu"
-        className="p-2 -mr-2 text-on-surface-variant hover:text-white transition-colors"
-      >
-        <Menu size={22} />
-      </button>
-
-      <AnimatePresence>
+  // Portaled to <body> so the fixed overlay escapes the navbar's backdrop-filter
+  // (an ancestor with backdrop-filter becomes the containing block for fixed
+  // descendants, which would otherwise pin the drawer to the 64px header).
+  const overlay = (
+    <AnimatePresence>
         {open && (
           <>
             <motion.div
@@ -119,6 +114,18 @@ export default function MobileNav({
           </>
         )}
       </AnimatePresence>
+  );
+
+  return (
+    <div className="sm:hidden">
+      <button
+        onClick={() => setOpen(true)}
+        aria-label="Open menu"
+        className="p-2 -mr-2 text-on-surface-variant hover:text-white transition-colors"
+      >
+        <Menu size={22} />
+      </button>
+      {typeof document !== "undefined" && createPortal(overlay, document.body)}
     </div>
   );
 }
