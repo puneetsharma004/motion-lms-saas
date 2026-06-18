@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import {
   SandpackProvider,
   SandpackLayout,
@@ -315,6 +315,19 @@ function GoalsPanel({ slug, accent }: { slug: string; accent: string }) {
   );
 }
 
+/** Reactive `(max-width: 768px)` check — SSR-safe (false on the server). */
+function useIsMobile() {
+  return useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia("(max-width: 768px)");
+      mq.addEventListener("change", cb);
+      return () => mq.removeEventListener("change", cb);
+    },
+    () => window.matchMedia("(max-width: 768px)").matches,
+    () => false,
+  );
+}
+
 export default function Sandbox({
   slug,
   starter,
@@ -324,6 +337,7 @@ export default function Sandbox({
 }: SandboxProps) {
   const [view, setView] = useState<"practice" | "solution">("practice");
   const [fullscreen, setFullscreen] = useState(false);
+  const isMobile = useIsMobile();
 
   const lessonFiles = view === "solution" ? solution : starter;
   const isSolution = view === "solution";
@@ -349,11 +363,21 @@ export default function Sandbox({
     };
   }, [fullscreen]);
 
-  const paneHeight = fullscreen ? "calc(100vh - 53px)" : 480;
+  // Heights are set inline (reliable) and made responsive here, since the panes
+  // stack vertically on mobile (see .sandbox-root in globals.css). `dvh` keeps
+  // full screen correct under the mobile address bar. Stacked full screen splits
+  // the viewport between the two panes; side-by-side gives each the full height.
+  const paneHeight = fullscreen
+    ? isMobile
+      ? "calc(50dvh - 27px)"
+      : "calc(100dvh - 53px)"
+    : isMobile
+      ? 320
+      : 480;
 
   return (
     <div
-      className={`glass-card border border-white/10 overflow-hidden flex flex-col ${
+      className={`sandbox-root glass-card border border-white/10 overflow-hidden flex flex-col ${
         fullscreen ? "fixed inset-0 z-80 rounded-none bg-[#0d0d0d]" : "rounded-xl"
       }`}
     >

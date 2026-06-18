@@ -152,12 +152,14 @@ body {
   z-index: 100;
 }
 
-/* Stack the sandbox editor/preview vertically on small screens. */
+/* Stack the sandbox editor/preview vertically on small screens. Targeted via
+   the outer container (.sandbox-root) so it doesn't depend on how Sandpack
+   merges the layout className. */
 @media (max-width: 768px) {
-  .sandbox-layout.sp-layout {
+  .sandbox-root .sp-layout {
     flex-direction: column;
   }
-  .sandbox-layout.sp-layout > .sp-stack {
+  .sandbox-root .sp-layout > .sp-stack {
     width: 100%;
   }
 }
