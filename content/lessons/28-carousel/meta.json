@@ -1,0 +1,9 @@
+{
+  "slug": "carousel",
+  "order": 28,
+  "title": "Directional Carousel",
+  "accent": "cyan",
+  "category": "Real-World Projects",
+  "summary": "A slider that animates left or right depending on the button pressed — AnimatePresence with a custom direction.",
+  "duration": "14 min"
+}

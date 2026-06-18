@@ -1,0 +1,9 @@
+{
+  "slug": "bento-grid",
+  "order": 29,
+  "title": "Bento Grid Hover",
+  "accent": "lime",
+  "category": "Real-World Projects",
+  "summary": "The trendy bento layout where tiles lift and settle on hover — whileHover with a spring, across a mixed-size grid.",
+  "duration": "10 min"
+}

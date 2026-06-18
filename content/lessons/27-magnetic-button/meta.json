@@ -1,0 +1,9 @@
+{
+  "slug": "magnetic-button",
+  "order": 27,
+  "title": "Magnetic Button",
+  "accent": "violet",
+  "category": "Real-World Projects",
+  "summary": "The award-site button that leans toward your cursor and springs back — pointer math + useMotionValue + useSpring.",
+  "duration": "12 min"
+}

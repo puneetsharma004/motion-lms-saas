@@ -1,0 +1,17 @@
+Swipe decks look fancy but they're just three ideas you've already met working
+together: `drag` to pick the card up, `onDragEnd` to check how far it went, and
+`AnimatePresence` + `exit` to fling it off-screen when it clears the threshold.
+Remove it from state and the next card — rendered just behind — becomes the new
+top.
+
+<Instructions>
+
+1. Import `motion` and `AnimatePresence` from `"motion/react"`.
+2. Wrap the stack in `<AnimatePresence>` and make the top card draggable: `drag="x"`.
+3. In `onDragEnd`, if `Math.abs(info.offset.x) > 100`, drop that card from state.
+4. Give the card an `exit` like `{ x: 300, opacity: 0, rotate: 18 }` so it flies away.
+
+</Instructions>
+
+Drag the top card past the edge and let go — it sails off and the next one steps
+up. Under the threshold, it springs back.

@@ -1,0 +1,17 @@
+Those "10,000+ happy customers" stats that tick up as you scroll to them combine
+two things you now know: `useInView` to fire once the element is on screen, and
+the imperative `animate(from, to, options)` to roll the value. `animate` calls
+`onUpdate` on every frame with the current number — round it and drop it into
+state (or straight into the DOM) and you've got a counter.
+
+<Instructions>
+
+1. Import `useInView` and `animate` from `"motion/react"`.
+2. Trigger once: `const inView = useInView(ref, { once: true })`.
+3. When `inView` flips true, run `animate(0, 2847, { duration: 1.5, onUpdate: (v) => setValue(Math.round(v)) })`.
+4. Remember to `return () => controls.stop()` from the effect.
+
+</Instructions>
+
+Hit **Run** — the number rolls from 0 to its target. Wire `useInView` to a tall
+scroll container and it'll fire exactly when the stat enters view.

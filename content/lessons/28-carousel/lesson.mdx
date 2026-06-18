@@ -1,0 +1,17 @@
+A good carousel slides the *right way* — new slide comes from the right on Next,
+from the left on Prev. The trick is the `custom` prop: pass the direction into
+`AnimatePresence` and into each slide's `variants`, and the enter/exit offsets
+flip sign based on it. A changing `key` tells `AnimatePresence` the slide
+swapped, so the old one exits as the new one enters.
+
+<Instructions>
+
+1. Import `motion` and `AnimatePresence` from `"motion/react"`.
+2. Track `[page, direction]` in state; `paginate(dir)` updates both.
+3. Wrap the slide in `<AnimatePresence custom={direction}>` and give the `motion.div` a `key={page}` + `custom={direction}`.
+4. Define `variants` where `enter`/`exit` use the direction: `(d) => ({ x: d > 0 ? 260 : -260 })`.
+
+</Instructions>
+
+Press Next and Prev — slides enter from the side you'd expect. That directional
+awareness is what makes carousels feel right.

@@ -1,0 +1,17 @@
+That button on award-winning sites that subtly leans toward your cursor and snaps
+back when you leave? It's a "magnetic" effect: on pointer move, measure the
+cursor's offset from the button's center, scale it down, and write it into motion
+values. Wrap those in `useSpring` so the lean is smooth and the return bounces.
+On pointer leave, reset to `0`.
+
+<Instructions>
+
+1. Import `motion`, `useMotionValue`, `useSpring` from `"motion/react"`.
+2. Create `x` / `y` motion values and spring them (`useSpring(x, { stiffness: 300, damping: 20 })`).
+3. `onPointerMove`: set `x`/`y` to `(cursor - center) * 0.4` using the button's `getBoundingClientRect()`.
+4. `onPointerLeave`: set them back to `0`. Point the button's `style` at the springs.
+
+</Instructions>
+
+Hover near the button — it reaches toward you, then springs home when you leave.
+Tune the `0.4` strength and the spring for more or less pull.

@@ -142,6 +142,31 @@ export const LESSON_CHECKS: Record<string, LessonCheck[]> = {
     { id: "stagger", label: "Ripple it with stagger()", test: has(/\bstagger\s*\(/) },
     { id: "animateCall", label: "Fire it by calling animate(...)", test: has(/\banimate\s*\(/) },
   ],
+  "number-counter": [
+    { id: "useInView", label: "Trigger when seen with useInView()", test: has(/\buseInView\s*\(/) },
+    { id: "animateCall", label: "Roll the value with animate(0, target, ...)", test: has(/\banimate\s*\(/) },
+    { id: "onUpdate", label: "Read each frame via onUpdate", test: has(/onUpdate/) },
+  ],
+  "swipe-cards": [
+    { id: "presence", label: "Wrap the deck in <AnimatePresence>", test: has(/<\s*AnimatePresence/) },
+    { id: "drag", label: "Make the top card draggable with drag", test: has(/\bdrag\b/) },
+    { id: "exit", label: "Fling it away with an exit prop", test: has(/\bexit\s*=\s*\{/) },
+  ],
+  "magnetic-button": [
+    { id: "useSpring", label: "Smooth the lean with useSpring()", test: has(/\buseSpring\s*\(/) },
+    { id: "pointer", label: "Track the cursor with onPointerMove", test: has(/onPointerMove|onMouseMove/) },
+    { id: "style", label: "Point the button's style at the springs", test: has(/style\s*=\s*\{/) },
+  ],
+  carousel: [
+    { id: "presence", label: "Wrap slides in <AnimatePresence>", test: has(/<\s*AnimatePresence/) },
+    { id: "custom", label: "Pass the direction via custom", test: has(/\bcustom\s*=/) },
+    { id: "exit", label: "Animate the leaving slide (exit)", test: has(/\bexit\s*=/) },
+  ],
+  "bento-grid": [
+    { id: "import", label: 'Import motion from "motion/react"', test: has(/from\s*["']motion\/react["']/) },
+    { id: "element", label: "Make each tile a <motion.*> element", test: has(/<\s*motion\.[a-z]/i) },
+    { id: "whileHover", label: "Lift it with whileHover", test: has(/\bwhileHover\s*=/) },
+  ],
 };
 
 export interface CheckResult {

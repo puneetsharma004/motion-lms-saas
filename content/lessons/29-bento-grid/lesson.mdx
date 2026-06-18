@@ -1,0 +1,16 @@
+"Bento" grids — mixed-size tiles in a tidy grid — are everywhere on modern
+landing pages, and the small lift each tile gets on hover is what makes them feel
+interactive. It's just `whileHover` with a spring `transition`. No state, no
+handlers: Motion tracks hover for you, and the spring gives the lift a bit of
+life on the way up and back down.
+
+<Instructions>
+
+1. Import `motion` from `"motion/react"` and make each tile a `motion.div`.
+2. Add `whileHover={{ scale: 1.05, y: -4 }}`.
+3. Give it a spring `transition={{ type: "spring", stiffness: 300, damping: 20 }}`.
+
+</Instructions>
+
+Hover the tiles — each lifts and springs back. The `col-span-2` tiles keep the
+bento rhythm while every cell stays interactive.

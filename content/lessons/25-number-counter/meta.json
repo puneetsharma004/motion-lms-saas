@@ -1,0 +1,9 @@
+{
+  "slug": "number-counter",
+  "order": 25,
+  "title": "Animated Number Counter",
+  "accent": "amber",
+  "category": "Real-World Projects",
+  "summary": "Count a stat up when it scrolls into view — useInView to trigger, imperative animate() to roll the number.",
+  "duration": "12 min"
+}

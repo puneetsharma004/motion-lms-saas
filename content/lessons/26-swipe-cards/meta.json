@@ -1,0 +1,9 @@
+{
+  "slug": "swipe-cards",
+  "order": 26,
+  "title": "Swipeable Card Stack",
+  "accent": "rose",
+  "category": "Real-World Projects",
+  "summary": "A Tinder-style deck: drag the top card, fling it past a threshold, and it exits while the next rises up.",
+  "duration": "16 min"
+}
