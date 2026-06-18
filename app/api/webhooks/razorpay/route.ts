@@ -2,17 +2,9 @@ import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getPlan } from "@/lib/plans";
+import { grantEntitlement } from "@/lib/entitlements";
 
 const WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET;
-
-/** Add `months` to the later of (now, current expiry) — access stacks. */
-function extend(currentExpiry: string | null, months: number): string {
-  const now = new Date();
-  const base =
-    currentExpiry && new Date(currentExpiry) > now ? new Date(currentExpiry) : now;
-  base.setMonth(base.getMonth() + months);
-  return base.toISOString();
-}
 
 /**
  * Razorpay webhook. Verifies the HMAC signature, then on a captured payment
@@ -62,20 +54,7 @@ export async function POST(req: Request) {
 
   const months = getPlan(purchase.plan_id)?.months ?? 1;
 
-  const { data: ent } = await admin
-    .from("entitlements")
-    .select("expires_at")
-    .eq("user_id", purchase.user_id)
-    .eq("product", purchase.product)
-    .maybeSingle();
-
-  await admin.from("entitlements").upsert({
-    user_id: purchase.user_id,
-    product: purchase.product,
-    expires_at: extend(ent?.expires_at ?? null, months),
-    source: "purchase",
-    updated_at: new Date().toISOString(),
-  });
+  await grantEntitlement(admin, purchase.user_id, purchase.product, months, "purchase");
 
   await admin
     .from("purchases")

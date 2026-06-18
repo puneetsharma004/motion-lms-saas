@@ -1,6 +1,7 @@
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import PricingCards from "@/components/pricing/PricingCards";
+import RedeemCoupon from "@/components/pricing/RedeemCoupon";
 import { getUser } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 
@@ -23,6 +24,7 @@ export default async function PricingPage() {
           </p>
         </div>
         <PricingCards signedIn={Boolean(user)} />
+        <RedeemCoupon signedIn={Boolean(user)} />
       </main>
       <Footer />
     </>
