@@ -14,9 +14,11 @@ import { AnimatePresence, motion } from "motion/react";
 export default function MobileNav({
   email,
   isConfigured,
+  isAdmin = false,
 }: {
   email: string | null;
   isConfigured: boolean;
+  isAdmin?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -76,6 +78,11 @@ export default function MobileNav({
               {isConfigured && email && (
                 <Link href="/dashboard" onClick={close} className={linkClass}>
                   Dashboard
+                </Link>
+              )}
+              {isConfigured && email && isAdmin && (
+                <Link href="/admin" onClick={close} className={`${linkClass} text-primary`}>
+                  Admin
                 </Link>
               )}
               {isConfigured && !email && (
